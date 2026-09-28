@@ -1,0 +1,1 @@
+{ "name": "fast-suite", "private": true, "type": "module", "scripts": { "test": "node --test --test-concurrency=8 'test/*.test.mjs'" } }
