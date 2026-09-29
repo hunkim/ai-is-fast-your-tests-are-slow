@@ -43,6 +43,12 @@ await waitFor(() => assert.equal(cache.flushed, 1));
   `page.waitForTimeout(ms)`. Capybara `expect(page).to have_content(...)` waits; Cypress `cy.get(...).should(...)`
   retries; never `cy.wait(2000)`.
 
+## Pattern A2 — doing N slow things to test a limit
+
+To check "the list keeps at most N" or "the 1000th call is rejected", tests often do the slow operation N times
+(each one writing a file, a DB row, a request). Start at the limit instead: fill the state directly to N, do the
+operation once, and assert what one more does (the oldest dropped, the call rejected). Faster and a sharper test.
+
 ## Pattern B — waiting out a real interval or timeout
 
 The code flushes every 20 s, debounces for 5 s, expires after 30 s, and the test waits that long.
@@ -108,6 +114,9 @@ conftest: they hide leaks that can also leak state between tests.
 - Calls to real hosts: slow, flaky, and not isolated. Replace with a local fake server on port 0
   (`http.createServer().listen(0)`, `httptest.NewServer`, `pytest-httpserver`, WireMock dynamic port) or a stub.
 - DNS lookups for unresolvable hosts can take seconds: use `127.0.0.1` / `.invalid` / `.test` names.
+- Go: `httptest.Server.CloseClientConnections()` doesn't close **hijacked** connections (WebSocket, `Hijacker`).
+  A test that "drops the connection" with it waits for the client's timeout instead, and may pass on the wrong
+  error. Have the fake handler return (or close the conn) itself.
 - Booting a DB/browser/container per test: boot **once per worker**, isolate by schema, transaction rollback, or
   temp dir. Testcontainers: a singleton container per JVM/worker; Playwright: one browser per worker, one context
   per test.
@@ -115,6 +124,10 @@ conftest: they hide leaks that can also leak state between tests.
 ## Pattern F — slow imports and startup
 
 Each test process pays interpreter start, transpile, and imports.
+- Go: compare each package's elapsed time with the sum of its tests (`go test -json`). A package with ~0 s of tests
+  and seconds of elapsed time is paying startup. On macOS the first launch of every freshly linked test binary is
+  scanned by the OS (~0.4 s, much more when 16 queue up at once). Don't defeat Go's test cache with `-count=1` on
+  hermetic tests: unchanged packages then cost nothing. [Case study](../../../CASE-STUDY-GO.md)
 - Node/TS: prefer a fast transpiler (tsx/esbuild/swc); Vitest: `NODE_COMPILE_CACHE=...`; avoid jsdom where node
   env suffices.
 - Python: `python -X importtime -c "import yourpkg" 2> import.log` to find heavy imports; import lazily in hot paths.

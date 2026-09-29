@@ -23,6 +23,7 @@
 | [**RESEARCH.md**](RESEARCH.md) (영문) | 궁금한 사람 | ~270편의 논문, 업계 리포트, 문서가 말하는 것 — selection, 병렬화, flakiness, 피드백 루프, AI 시대의 검증 |
 | [**research/**](research) (영문) | 연구자 | 주석이 달린 참고문헌 목록 다섯 개: 모든 출처에 링크, 수치, 원문 전체를 읽었는지 여부 |
 | [**CASE-STUDY.ko.md**](CASE-STUDY.ko.md) | 엔지니어링 리드 | 12분 → 24초, 단계별로, 효과가 없었던 것까지 |
+| [**CASE-STUDY-GO.ko.md**](CASE-STUDY-GO.ko.md) | Go 팀 | 15초 → 1초: 끊지 않던 WebSocket 페이크, 테스트 밖에 있던 대기 |
 | [**examples/**](examples) (영문) | 모두 | `slow-suite`(12.0 s)와 `fast-suite`(1.1 s): 실무에서 흔한 세 가지 기다림과 그 수정 |
 
 ## 1분 만에 해보기
