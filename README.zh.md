@@ -1,5 +1,6 @@
-> **把这个 URL 交给你的 AI 编码代理，今天就能让测试变快。**
-> *“阅读 https://github.com/hunkim/ai-is-fast-your-tests-are-slow，把我们的测试套件提速。”* 一个真实项目从 **12 分钟降到 24 秒**，一个测试都没跳过，新增测试也保持快速：瓶颈消失了。
+> **用 AI 为你的测试套件提速。** 把这个 URL 交给你的编码代理即可：
+> *“阅读 https://github.com/hunkim/ai-is-fast-your-tests-are-slow，把我们的测试套件提速。”*
+> 一个真实项目：**12 分钟 → 24 秒。** 每个测试都保留。新增测试保持快速。瓶颈消失。
 
 # AI is fast. Your tests are slow.
 

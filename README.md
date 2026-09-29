@@ -1,5 +1,6 @@
-> **Paste this URL into your AI coding agent and your tests get fast — today.**
-> *"Read https://github.com/hunkim/ai-is-fast-your-tests-are-slow and make our test suite fast."* A real suite went from **12 minutes to 24 seconds**, no test skipped, and new tests stay fast: the bottleneck is gone.
+> **Supercharge your test suite with AI.** Paste this URL into your coding agent:
+> *"Read https://github.com/hunkim/ai-is-fast-your-tests-are-slow and make our test suite fast."*
+> One real suite: **12 minutes → 24 seconds.** Every test kept. New tests stay fast. The bottleneck is gone.
 
 # AI is fast. Your tests are slow.
 
