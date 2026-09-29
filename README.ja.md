@@ -28,6 +28,7 @@
 | [**RESEARCH.md**](RESEARCH.md)（英語） | 知りたい人 | 約 270 本の論文・業界レポート・ドキュメントが語ること：テスト選択、並列化、flaky テスト、フィードバックループ、AI 時代の検証 |
 | [**research/**](research)（英語） | 研究者 | 5 つの注釈付き文献リスト：すべての出典にリンク、数値、全文を読んだかどうかを記載 |
 | [**CASE-STUDY.ja.md**](CASE-STUDY.ja.md) | エンジニアリングリード | 12 分 → 24 秒を一歩ずつ、うまくいかなかったことも含めて |
+| [**CASE-STUDY-GO.md**](CASE-STUDY-GO.md)（英語） | Go チーム | 15 s → 1 s：切断しない WebSocket のフェイクと、テストの外にあった待ち時間 |
 | [**examples/**](examples)（英語） | すべての人 | `slow-suite`（12.0 s）と `fast-suite`（1.1 s）：現実によくある 3 つの待ちとその修正 |
 
 ## 1 分で試す

@@ -24,6 +24,7 @@
 | [**RESEARCH.md**](RESEARCH.md)（英文） | 好奇的人 | 约 270 篇论文、行业报告和文档怎么说——测试选择、并行、flaky 测试、反馈循环、AI 时代的验证 |
 | [**research/**](research)（英文） | 研究者 | 五份带注释的参考文献：每个来源都附有链接、数据，并注明我们是否读过全文 |
 | [**CASE-STUDY.zh.md**](CASE-STUDY.zh.md) | 工程负责人 | 12 分钟 → 24 秒，逐步拆解，也包括哪些做法没用 |
+| [**CASE-STUDY-GO.md**](CASE-STUDY-GO.md)（英文） | Go 团队 | 15 s → 1 s：一个从不挂断的 WebSocket 假实现，以及一段不在测试里的等待 |
 | [**examples/**](examples)（英文） | 所有人 | `slow-suite`（12.0 s）和 `fast-suite`（1.1 s）：三种真实世界中的等待，以及修复方法 |
 
 ## 一分钟上手
