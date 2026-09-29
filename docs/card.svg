@@ -1,56 +1,56 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="AI is fast. Your tests are slow. Paste this repo's URL into your AI coding agent: a real test suite went from 12 minutes to 24 seconds with no test skipped. 85 percent of the time was waiting, not testing. Measure, remove the waits, parallelize.">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b1020"/>
-      <stop offset="1" stop-color="#141b33"/>
+      <stop offset="0" stop-color="#0d1320"/>
+      <stop offset="1" stop-color="#191722"/>
     </linearGradient>
     <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#f87171"/>
-      <stop offset="0.85" stop-color="#f87171"/>
-      <stop offset="0.85" stop-color="#34d399"/>
-      <stop offset="1" stop-color="#34d399"/>
+      <stop offset="0" stop-color="#3f3f46"/>
+      <stop offset="0.85" stop-color="#3f3f46"/>
+      <stop offset="0.85" stop-color="#d2ff95"/>
+      <stop offset="1" stop-color="#d2ff95"/>
     </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <g font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" fill="#e5e7eb">
+  <g font-family="Geist, Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" fill="#d2d5db">
     <!-- eyebrow -->
-    <rect x="72" y="48" width="662" height="50" rx="25" fill="#fbbf24"/>
-    <text x="403" y="83" font-size="25" font-weight="800" fill="#1a1400" text-anchor="middle" letter-spacing="1">▶  PASTE THIS URL INTO YOUR AI CODING AGENT</text>
+    <rect x="72" y="48" width="662" height="50" rx="8" fill="#5b52ff"/>
+    <text x="403" y="83" font-size="25" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="1">▶  PASTE THIS URL INTO YOUR AI CODING AGENT</text>
     <!-- title -->
-    <text x="72" y="160" font-size="66" font-weight="800" fill="#ffffff">AI is fast. <tspan fill="#f87171">Your tests are slow.</tspan></text>
-    <text x="72" y="208" font-size="27" fill="#cbd5e1">In the AI coding era the bottleneck is testing. Most of that time isn't testing. It's waiting.</text>
+    <text x="72" y="160" font-size="66" font-weight="800" fill="#ffffff">AI is fast. <tspan fill="#99a5ff">Your tests are slow.</tspan></text>
+    <text x="72" y="208" font-size="27" fill="#d2d5db">In the AI coding era the bottleneck is testing. Most of that time isn't testing. It's waiting.</text>
 
     <!-- big number -->
-    <text x="72" y="330" font-size="96" font-weight="800" fill="#ffffff">12 min <tspan fill="#64748b">→</tspan> <tspan fill="#34d399">24 s</tspan></text>
-    <text x="72" y="372" font-size="24" fill="#cbd5e1">A real production suite, 900+ tests, ~30× faster. <tspan font-weight="700" fill="#ffffff">Not one test skipped.</tspan></text>
+    <text x="72" y="330" font-size="96" font-weight="800" fill="#ffffff">12 min <tspan fill="#71717a">→</tspan> <tspan fill="#d2ff95">24 s</tspan></text>
+    <text x="72" y="372" font-size="24" fill="#d2d5db">A real production suite, 900+ tests, ~30× faster. <tspan font-weight="700" fill="#ffffff">Not one test skipped.</tspan></text>
 
     <!-- waiting bar -->
     <rect x="72" y="404" width="1056" height="18" rx="9" fill="url(#bar)"/>
-    <text x="72" y="452" font-size="22" fill="#fca5a5"><tspan font-weight="700">85% of the time was waiting</tspan> — sleeps, retry backoff, timers holding processes open</text>
-    <text x="1128" y="452" font-size="22" fill="#6ee7b7" text-anchor="end" font-weight="700">15% real work</text>
+    <text x="72" y="452" font-size="22" fill="#9aa0aa"><tspan font-weight="700" fill="#ffffff">85% of the time was waiting</tspan> — sleeps, retry backoff, timers holding processes open</text>
+    <text x="1128" y="452" font-size="22" fill="#d2ff95" text-anchor="end" font-weight="700">15% real work</text>
 
     <!-- three steps -->
     <g font-size="21">
       <g transform="translate(72 500)">
-        <circle cx="16" cy="18" r="16" fill="#1d4ed8"/><text x="16" y="26" font-size="20" font-weight="800" text-anchor="middle" fill="#ffffff">1</text>
+        <circle cx="16" cy="18" r="16" fill="#5b52ff"/><text x="16" y="26" font-size="20" font-weight="800" text-anchor="middle" fill="#ffffff">1</text>
         <text x="44" y="26" font-weight="700" fill="#ffffff">Measure</text>
-        <text x="44" y="56" fill="#cbd5e1">wall vs CPU time per test file</text>
+        <text x="44" y="56" fill="#d2d5db">wall vs CPU time per test file</text>
       </g>
       <g transform="translate(420 500)">
-        <circle cx="16" cy="18" r="16" fill="#1d4ed8"/><text x="16" y="26" font-size="20" font-weight="800" text-anchor="middle" fill="#ffffff">2</text>
+        <circle cx="16" cy="18" r="16" fill="#5b52ff"/><text x="16" y="26" font-size="20" font-weight="800" text-anchor="middle" fill="#ffffff">2</text>
         <text x="44" y="26" font-weight="700" fill="#ffffff">Remove the waits</text>
-        <text x="44" y="56" fill="#cbd5e1">fake the clock, no retries, no sleeps</text>
+        <text x="44" y="56" fill="#d2d5db">fake the clock, no retries, no sleeps</text>
       </g>
       <g transform="translate(790 500)">
-        <circle cx="16" cy="18" r="16" fill="#1d4ed8"/><text x="16" y="26" font-size="20" font-weight="800" text-anchor="middle" fill="#ffffff">3</text>
+        <circle cx="16" cy="18" r="16" fill="#5b52ff"/><text x="16" y="26" font-size="20" font-weight="800" text-anchor="middle" fill="#ffffff">3</text>
         <text x="44" y="26" font-weight="700" fill="#ffffff">Parallelize, keep the gate</text>
-        <text x="44" y="56" fill="#cbd5e1">all cores, full suite before push</text>
+        <text x="44" y="56" fill="#d2d5db">all cores, full suite before push</text>
       </g>
     </g>
 
     <!-- footer -->
-    <rect x="72" y="586" width="1056" height="1" fill="#334155"/>
-    <text x="72" y="614" font-size="21" fill="#93c5fd" font-weight="600">github.com/hunkim/ai-is-fast-your-tests-are-slow</text>
-    <text x="1128" y="614" font-size="20" fill="#94a3b8" text-anchor="end">Research (~270 sources) · Tutorial · Agent skill · MIT</text>
+    <rect x="72" y="586" width="1056" height="1" fill="#3f3f46"/>
+    <text x="72" y="614" font-size="21" fill="#99a5ff" font-weight="600">github.com/hunkim/ai-is-fast-your-tests-are-slow</text>
+    <text x="1128" y="614" font-size="20" fill="#9aa0aa" text-anchor="end">Research (~270 sources) · Tutorial · Agent skill · MIT</text>
   </g>
 </svg>
