@@ -24,6 +24,24 @@ Evidence for every rule here: [RESEARCH.md](https://github.com/hunkim/ai-is-fast
 - **No hiding.** Don't raise timeouts, add retries, add `--forceExit`/`--exit`, or disable isolation to make a
   symptom go away. Find the cause.
 
+## The loop for any change
+
+Every change to code follows the same six steps, whether a person or an agent makes it. Fast tests exist so this
+loop is cheap enough to run every time.
+
+1. **Full suite first, before editing anything.** Record the result. Green means a later red is yours; red means
+   report it before you start, and don't count it against your change. (Never "fix" pre-existing failures silently.)
+2. **Write or extend a test that fails without the change.** For a bug, reproduce it; for a feature, assert the
+   expected behavior from the spec. Run it and watch it fail for the right reason. Follow the new-test rules below.
+3. **Make the change.**
+4. **Run the affected tests** (the new/changed test, its file, related files) until they pass.
+5. **Budget-check the test files you added or changed** (time, no waiting, repeated runs — below).
+6. **Full suite again**, then report both runs: the exact command, tests passed/failed/skipped, time. The change
+   is done only when step 6 is green with at least as many passing tests as step 1 and no new skips.
+
+If the full suite takes too long to run twice per change, that is the problem to fix first (next sections), not a
+reason to skip steps 1 or 6.
+
 ## Workflow: adding or changing a test
 
 A fast suite stays fast only if every new test follows the same rules. Most flaky tests are flaky from the day they
@@ -160,19 +178,21 @@ These rules make your own loop fast and your results trustworthy ([references/ag
 
 1. **Find the real test command** (CI config, package scripts, Makefile, AGENTS.md) and how to run one file or test.
    Don't guess; a wrong runner causes repeated reruns.
-2. **Inner loop:** after each edit, run the affected tests (the file you changed, its test, related tests).
-3. **Before saying done:** run the full suite (or the repo's gate command) and show the command and its summary.
+2. **Baseline:** run the full suite once before editing, and keep the result.
+3. **Inner loop:** after each edit, run the affected tests (the file you changed, its test, related tests).
+4. **Before saying done:** run the full suite (or the repo's gate command) again and show both summaries.
    Affected-only runs miss regressions.
-4. **Keep output compact:** summary line plus failing tests; send full logs to a file and grep them. Don't paste
+5. **Keep output compact:** summary line plus failing tests; send full logs to a file and grep them. Don't paste
    thousands of lines into context.
-5. **Never make tests pass by changing the tests** unless the task is to change the tests. Don't delete, skip,
+6. **Never make tests pass by changing the tests** unless the task is to change the tests. Don't delete, skip,
    special-case, or loosen assertions. If a test seems wrong, say so and ask.
-6. **Write the test first** for bug fixes (reproduce, see it fail, then fix). Assert expected behavior from the spec,
-   not whatever the code currently does.
-7. **Don't add waits.** No fixed sleeps in new tests; use fake timers or condition waits. No fixed ports or paths.
-8. **Flaky failure?** Re-run that one test once to classify it; if it is unrelated to your diff and flips, report it
+7. **Every change ships with a test that fails without it** — written first (see it fail, then make it pass). A bug
+   gets a reproduction; a feature gets an assertion of the expected behavior from the spec, not of whatever the
+   code currently does.
+8. **Don't add waits.** No fixed sleeps in new tests; use fake timers or condition waits. No fixed ports or paths.
+9. **Flaky failure?** Re-run that one test once to classify it; if it is unrelated to your diff and flips, report it
    as flaky with evidence. Don't retry the whole suite in a loop.
-9. **Parallel agents:** use your own worktree and your own ports, DBs and temp dirs so concurrent runs don't collide.
+10. **Parallel agents:** use your own worktree and your own ports, DBs and temp dirs so concurrent runs don't collide.
 
 ## Done criteria for a speed-up task
 

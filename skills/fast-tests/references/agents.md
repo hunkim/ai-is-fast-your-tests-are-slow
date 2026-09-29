@@ -39,8 +39,9 @@ learn to game. Make it fast, make it unambiguous, and protect it.
 - One file: `npx vitest run path/to/file.test.ts`   One test: add `-t "name"`
 - While editing: `npx vitest related --run <changed files>`
 - Output is quiet by default; full log: `npm run check > /tmp/test.log 2>&1; grep -n "FAIL\|✗" /tmp/test.log`
+- Loop: full gate before editing → a test that fails without the change → change → affected tests → full gate again.
 - Rules: never delete/skip/weaken a test to make it pass — if a test looks wrong, say so. No sleeps; use fake
-  timers or wait for a condition. No fixed ports/paths (port 0, temp dirs). New bug → failing test first.
+  timers or wait for a condition. No fixed ports/paths (port 0, temp dirs). Every change ships with a test.
 - Known flaky tests: `test/quarantine.txt`
 ```
 
@@ -76,12 +77,17 @@ then split the long pole, then add workers.
 
 1. Read AGENTS.md/CLAUDE.md/CI config for the gate command and one-file command. If missing, find them in package
    scripts, Makefile, CI workflow; don't guess a runner.
-2. For a bug: write a failing test from the report first; watch it fail for the right reason.
-3. Edit → run the affected tests → read only the failures → edit.
-4. Before finishing: run the full gate once. Show the exact command and the summary (passed/failed/skipped, time).
-5. If something unrelated fails: re-run that single test once. Flips → report as flaky with evidence; consistent
+2. **Run the full gate before editing anything** and keep the summary. Red before you start is reported, not
+   silently fixed or blamed on your change later.
+3. **Write or extend a test that fails without your change** — a reproduction for a bug, the expected behavior
+   from the spec for a feature. Watch it fail for the right reason.
+4. Edit → run the affected tests → read only the failures → edit.
+5. Budget-check the test files you added or changed (`profile_tests.py --max-seconds … --fail-on-waiting --repeat 5`).
+6. **Run the full gate again** and show both summaries (passed/failed/skipped, time). Done means: green, at least
+   as many passing tests as in step 2, no new skips.
+7. If something unrelated fails: re-run that single test once. Flips → report as flaky with evidence; consistent
    failure → investigate or report, never paper over it.
-6. Leave the suite at least as fast as you found it: no new sleeps, fixed ports, or real network calls.
+8. Leave the suite at least as fast as you found it: no new sleeps, fixed ports, or real network calls.
 
 ## Reviewing agent-written tests
 
