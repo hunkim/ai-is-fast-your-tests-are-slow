@@ -1,4 +1,9 @@
+> **이 URL을 AI 코딩 에이전트에 붙여넣으면 오늘 바로 테스트가 빨라집니다.**
+> *"https://github.com/hunkim/ai-is-fast-your-tests-are-slow 를 읽고 우리 테스트 스위트를 빠르게 만들어 줘."* 실제 프로젝트에서 **12분이 24초**로, 테스트는 하나도 건너뛰지 않았고 새 테스트도 계속 빠르게 유지됩니다. 병목이 사라집니다.
+
 # AI is fast. Your tests are slow.
+
+![AI is fast. Your tests are slow. — 12 min → 24 s, no test skipped](docs/card.svg)
 
 **AI는 빠르다. 느린 건 당신의 테스트다.**
 

@@ -1,4 +1,9 @@
+> **この URL を AI コーディングエージェントに貼り付ければ、今日からテストが速くなります。**
+> *「https://github.com/hunkim/ai-is-fast-your-tests-are-slow を読んで、うちのテストスイートを速くして」* 実際のプロジェクトで **12 分が 24 秒**に。テストは一つも省略せず、新しいテストも速いまま。ボトルネックが消えます。
+
 # AI is fast. Your tests are slow.
+
+![AI is fast. Your tests are slow. — 12 min → 24 s, no test skipped](docs/card.svg)
 
 **AI は速い。遅いのはあなたのテストだ。**
 

@@ -1,4 +1,9 @@
+> **Paste this URL into your AI coding agent and your tests get fast — today.**
+> *"Read https://github.com/hunkim/ai-is-fast-your-tests-are-slow and make our test suite fast."* A real suite went from **12 minutes to 24 seconds**, no test skipped, and new tests stay fast: the bottleneck is gone.
+
 # AI is fast. Your tests are slow.
+
+![AI is fast. Your tests are slow. — 12 min → 24 s, no test skipped](docs/card.svg)
 
 **English** · [한국어](README.ko.md) · [日本語](README.ja.md) · [中文](README.zh.md)
 
