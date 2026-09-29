@@ -21,6 +21,7 @@ effective fix. [Read the case study →](CASE-STUDY.md)
 | [**RESEARCH.md**](RESEARCH.md) | The curious | What ~270 papers, industry reports and docs say — selection, parallelism, flakiness, feedback loops, AI-era verification |
 | [**research/**](research) | Researchers | Five annotated bibliographies: every source with link, numbers, and whether we read the full text |
 | [**CASE-STUDY.md**](CASE-STUDY.md) | Engineering leads | 12 min → 24 s, step by step, with what didn't work |
+| [**CASE-STUDY-GO.md**](CASE-STUDY-GO.md) | Go teams | 15 s → 1 s: a WebSocket fake that never hung up, and a wait that wasn't in the tests |
 | [**examples/**](examples) | Everyone | `slow-suite` (12.0 s) and `fast-suite` (1.1 s): three real-world waits, fixed |
 
 ## Try it in one minute
