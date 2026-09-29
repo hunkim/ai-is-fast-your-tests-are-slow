@@ -14,7 +14,8 @@
   <rect width="1200" height="630" fill="url(#bg)"/>
   <g font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" fill="#e5e7eb">
     <!-- eyebrow -->
-    <text x="72" y="84" font-size="22" font-weight="600" fill="#93c5fd" letter-spacing="1">PASTE THIS URL INTO YOUR AI CODING AGENT</text>
+    <rect x="72" y="48" width="662" height="50" rx="25" fill="#fbbf24"/>
+    <text x="403" y="83" font-size="25" font-weight="800" fill="#1a1400" text-anchor="middle" letter-spacing="1">▶  PASTE THIS URL INTO YOUR AI CODING AGENT</text>
     <!-- title -->
     <text x="72" y="160" font-size="66" font-weight="800" fill="#ffffff">AI is fast. <tspan fill="#f87171">Your tests are slow.</tspan></text>
     <text x="72" y="208" font-size="27" fill="#cbd5e1">In the AI coding era the bottleneck is testing. Most of that time isn't testing. It's waiting.</text>
