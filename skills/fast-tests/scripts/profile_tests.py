@@ -11,6 +11,12 @@ Usage:
   profile_tests.py --cmd "go test ./{file}" pkg/a pkg/b          # {file} can be any unit: file, package, module
   profile_tests.py --cmd "..." --json report.json "..."           # machine-readable output for agents
 
+Budget gate for new or changed tests (exit code 1 on any violation):
+  profile_tests.py --cmd "npx jest {file}" --max-seconds 2 --fail-on-waiting --repeat 5 src/new.test.ts
+    --max-seconds S    a unit slower than S seconds fails (it would become the suite's long pole)
+    --fail-on-waiting  a unit that mostly waits (low CPU, high wall) fails
+    --repeat N         run each unit N times; different outcomes across runs = FLAKY (fails)
+
 Only the Python 3.8+ standard library is used. Per-process CPU comes from os.wait4 (Linux, macOS, BSD).
 """
 from __future__ import annotations
@@ -87,11 +93,18 @@ def main() -> int:
     ap.add_argument("--timeout", type=float, default=600, help="seconds before a file is killed (default 600)")
     ap.add_argument("--top", type=int, default=15, help="rows to print (default 15)")
     ap.add_argument("--json", metavar="PATH", help="also write the full report as JSON")
+    ap.add_argument("--max-seconds", type=float, help="budget: fail if any unit takes longer than this (worst of --repeat runs)")
+    ap.add_argument("--fail-on-waiting", action="store_true", help="budget: fail if any unit is WAITING")
+    ap.add_argument("--repeat", type=int, default=1, help="run each unit N times (worst wall time kept; differing outcomes = FLAKY)")
     args = ap.parse_args()
 
     units: list[str] = []
     for u in args.units:
-        matches = sorted(glob.glob(u, recursive=True, root_dir=args.cwd)) if any(c in u for c in "*?[") else [u]
+        if any(c in u for c in "*?["):
+            base = args.cwd or "."
+            matches = sorted(os.path.relpath(m, base) for m in glob.glob(os.path.join(base, u), recursive=True))
+        else:
+            matches = [u]
         units.extend(m for m in matches if m not in units)
     if not units:
         print("no test files matched", file=sys.stderr)
@@ -99,8 +112,20 @@ def main() -> int:
 
     print(f"profiling {len(units)} units, {args.workers} at a time …", file=sys.stderr)
     t0 = time.perf_counter()
+    def run_repeated(u: str) -> dict:
+        runs = [run_one(args.cmd, u, args.cwd, args.timeout) for _ in range(max(1, args.repeat))]
+        worst = max(runs, key=lambda r: r["wall_s"])
+        outcomes = {r["exit"] == 0 for r in runs}
+        worst = dict(worst)
+        worst["runs"] = len(runs)
+        worst["flaky"] = len(outcomes) > 1
+        if worst["flaky"] or any(r["exit"] != 0 for r in runs):
+            failing = next(r for r in runs if r["exit"] != 0)
+            worst["exit"], worst["stderr_tail"] = failing["exit"], failing["stderr_tail"]
+        return worst
+
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        rows = list(pool.map(lambda u: run_one(args.cmd, u, args.cwd, args.timeout), units))
+        rows = list(pool.map(run_repeated, units))
     elapsed = time.perf_counter() - t0
     rows.sort(key=lambda r: r["wall_s"], reverse=True)
 
@@ -120,8 +145,12 @@ def main() -> int:
         note = []
         if r in waiting:
             note.append("WAITING")
+        if r.get("flaky"):
+            note.append("FLAKY")
         if r["exit"] != 0:
             note.append(f"exit={r['exit']}")
+        if args.max_seconds is not None and r["wall_s"] > args.max_seconds:
+            note.append(f"OVER {args.max_seconds:g}s")
         print(f"{r['unit']:<{w}}  {r['wall_s']:>7.1f}  {r['cpu_s']:>7.1f}  {r['cpu_ratio'] * 100:>4.0f}%  {' '.join(note)}")
 
     print(f"\n{len(rows)} units · serial sum {total_wall:.1f} s · CPU {total_cpu:.1f} s · profiled in {elapsed:.1f} s")
@@ -135,11 +164,25 @@ def main() -> int:
     print("\nnext: fix WAITING units first (sleeps, retry backoff, open timers/handles, network timeouts),"
           "\n      then split the long pole, then raise workers. See the fast-tests skill.")
 
+    violations = []
+    if args.max_seconds is not None:
+        violations += [f"{r['unit']}: {r['wall_s']:.1f} s > budget {args.max_seconds:g} s" for r in rows if r["wall_s"] > args.max_seconds]
+    if args.fail_on_waiting:
+        violations += [f"{r['unit']}: WAITING ({r['cpu_ratio'] * 100:.0f}% CPU over {r['wall_s']:.1f} s)" for r in waiting]
+    violations += [f"{r['unit']}: FLAKY (outcomes differed across {r['runs']} runs)" for r in rows if r.get("flaky")]
+    if violations:
+        print("\nBUDGET VIOLATIONS:")
+        for v in violations:
+            print(f"  ✗ {v}")
+    elif args.max_seconds is not None or args.fail_on_waiting or args.repeat > 1:
+        print("\nbudget: all units within limits")
+
     if args.json:
         with open(args.json, "w") as f:
             json.dump({"units": rows, "serial_wall_s": round(total_wall, 1), "cpu_s": round(total_cpu, 1), "waiting_units": [r["unit"] for r in waiting],
-                       "waiting_s": round(wait_s, 1), "projected_wall_s": projections, "long_pole": rows[0]["unit"], "cpus": cpus}, f, indent=2)
-    return 1 if failed else 0
+                       "waiting_s": round(wait_s, 1), "projected_wall_s": projections, "long_pole": rows[0]["unit"], "cpus": cpus,
+                       "violations": violations}, f, indent=2)
+    return 1 if (failed or violations) else 0
 
 
 if __name__ == "__main__":
